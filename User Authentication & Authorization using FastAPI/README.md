@@ -1,5 +1,12 @@
 # User Authentication & Authorization using FastAPI
 
+After opening the file paste this link:
+python -m uvicorn main:app --reload
+
+and then 
+paste this link in the browser:
+http://127.0.0.1:8000/docs
+
 This project implements a secure task manager API with:
 
 - user registration and login
