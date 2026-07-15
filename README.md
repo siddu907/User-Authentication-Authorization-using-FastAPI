@@ -1,5 +1,5 @@
 # User Authentication & Authorization using FastAPI
-After openong the file paste this link
+After openong the file paste this link:
 python -m uvicorn main:app --reload
 
 and then 
