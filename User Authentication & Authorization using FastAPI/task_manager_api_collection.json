@@ -1,0 +1,91 @@
+{
+  "info": {
+    "name": "Task Manager API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"full_name\": \"Alice Johnson\",\n  \"email\": \"alice@example.com\",\n  \"password\": \"StrongPass123\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/signup",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "signup"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"StrongPass123\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/login",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Me",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/me",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "me"]
+        }
+      }
+    },
+    {
+      "name": "Tasks - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Write report\",\n  \"description\": \"Finish the weekly report\",\n  \"status\": \"Pending\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["tasks"]
+        }
+      }
+    },
+    {
+      "name": "Tasks - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["tasks"]
+        }
+      }
+    }
+  ]
+}
