@@ -1,0 +1,26 @@
+# FastAPI Framework
+fastapi==0.116.1
+# ASGI Server
+uvicorn==0.35.0
+# SQLAlchemy ORM
+sqlalchemy==2.0.43
+# Pydantic Validation
+pydantic==2.11.7
+pydantic-settings==2.10.1
+email-validator==2.3.0
+# Password Hashing
+passlib[bcrypt]==1.7.4
+bcrypt==3.2.0
+# JWT Authentication
+python-jose[cryptography]==3.5.0
+# OAuth2 Form Support
+python-multipart==0.0.20
+# Environment Variables
+python-dotenv==1.1.1
+# Email Verification Support
+itsdangerous==2.2.0
+# HTTP Client
+# (Forgot Password / Verification)
+httpx==0.28.1
+slowapi==0.1.9
+pytest==7.4.0

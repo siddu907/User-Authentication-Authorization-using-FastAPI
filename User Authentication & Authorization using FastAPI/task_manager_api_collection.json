@@ -1,0 +1,350 @@
+{
+  "info": {
+    "name": "Task Manager API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "access_token", "value": ""},
+    {"key": "refresh_token", "value": ""},
+    {"key": "verification_token", "value": ""},
+    {"key": "reset_token", "value": ""},
+    {"key": "task_id", "value": ""},
+    {"key": "user_id", "value": ""}
+  ],
+  "item": [
+    {
+      "name": "Auth - Signup",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.verification_token) { pm.environment.set('verification_token', jsonData.verification_token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"full_name\": \"Alice Johnson\",\n  \"email\": \"alice@example.com\",\n  \"password\": \"StrongPass123\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/signup",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "signup"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.access_token) { pm.environment.set('access_token', jsonData.access_token); pm.collectionVariables.set('access_token', jsonData.access_token); }",
+              "if (jsonData.refresh_token) { pm.environment.set('refresh_token', jsonData.refresh_token); pm.collectionVariables.set('refresh_token', jsonData.refresh_token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"StrongPass123\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/login",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/logout",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "logout"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Me",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/me",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "me"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Admin Dashboard",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/admin",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "admin"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Refresh Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{refresh_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/refresh",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "refresh"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Verify Email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{verification_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/verify-email",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "verify-email"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Forgot Password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const jsonData = pm.response.json();",
+              "if (jsonData.reset_token) { pm.environment.set('reset_token', jsonData.reset_token); pm.collectionVariables.set('reset_token', jsonData.reset_token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alice@example.com\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/forgot-password",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "forgot-password"]
+        }
+      }
+    },
+    {
+      "name": "Auth - Reset Password",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"token\": \"{{reset_token}}\",\n  \"new_password\": \"NewStrongPass123\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/auth/reset-password",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["auth", "reset-password"]
+        }
+      }
+    },
+    {
+      "name": "Tasks - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Write report\",\n  \"description\": \"Finish the weekly report\",\n  \"status\": \"Pending\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["tasks"]
+        }
+      }
+    },
+    {
+      "name": "Tasks - List",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["tasks"]
+        }
+      }
+    },
+    {
+      "name": "Tasks - Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks/{{task_id}}",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Tasks - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Write report updated\",\n  \"description\": \"Finish the weekly report today\",\n  \"status\": \"In Progress\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks/{{task_id}}",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Tasks - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/tasks/{{task_id}}",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Admin - List Users",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/admin/users",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["admin", "users"]
+        }
+      }
+    },
+    {
+      "name": "Admin - Delete User",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/admin/users/{{user_id}}",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["admin", "users", "{{user_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Admin - List All Tasks",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/admin/tasks",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["admin", "tasks"]
+        }
+      }
+    },
+    {
+      "name": "Admin - Update Any Task",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Admin updated title\",\n  \"description\": \"Admin changed this task\",\n  \"status\": \"Completed\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/admin/tasks/{{task_id}}",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["admin", "tasks", "{{task_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Admin - Delete Any Task",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{access_token}}"}
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/admin/tasks/{{task_id}}",
+          "host": ["http://127.0.0.1:8000"],
+          "path": ["admin", "tasks", "{{task_id}}"]
+        }
+      }
+    }
+  ]
+}
